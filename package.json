@@ -10,7 +10,8 @@
         "clean": "rm dist/bundle.js",
         "build": "webpack",
         "start-client": "webpack-dev-server --hot --mode development",
-        "start": "ts-node-dev server.ts",
+        "start-server": "ts-node-dev server.ts",
+        "start": "concurrently \"npm:start-client\" \"npm:start-server\"",
         "postinstall": "tsc"
     },
     "dependencies": {
@@ -30,7 +31,7 @@
         "awesome-typescript-loader": "^5.2.1",
         "axios": "^0.19.2",
         "bcrypt": "^5.0.0",
-        "concurrently": "^5.2.0",
+        "concurrently": "^5.3.0",
         "css-loader": "^3.6.0",
         "dotenv": "^8.2.0",
         "express": "^4.17.1",

@@ -9,7 +9,7 @@ import { routes } from './routes';
 
 //Express setup
 const app = express();
-const PORT = process.env.PORT || 3000;
+const PORT = 3000;
 
 //Define middleware here
 app.use(express.urlencoded({ extended: true }));
@@ -18,16 +18,11 @@ app.use(express.json());
 //Avoid using default session cookie name
 app.set('trust proxy', 1);
 
-// Serve up static assets (usually on heroku)
-if (process.env.NODE_ENV === 'production') {
-    app.use(express.static('public'));
-}
-
 //Routes
 app.use(routes);
 
 // Connect to the Mongo DB
-const MONGODB_URI = process.env.MONGODB_URI || 'mongodb://localhost/educateAble';
+const MONGODB_URI = 'mongodb://mongo:27017/educateable';
 
 mongoose.connect(MONGODB_URI, {
     useNewUrlParser: true,
