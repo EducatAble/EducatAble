@@ -1,5 +1,8 @@
 FROM node:8
 
+# Create an environment variable for MongoDB URI
+ENV MONGODB_URI='mongodb://localhost:27017/educatable'
+
 # Create app directory
 WORKDIR /usr/src/app
 

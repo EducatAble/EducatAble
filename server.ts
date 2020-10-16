@@ -22,7 +22,7 @@ app.set('trust proxy', 1);
 app.use(routes);
 
 // Connect to the Mongo DB
-const MONGODB_URI = 'mongodb://mongo:27017/educateable';
+const MONGODB_URI = 'mongodb://localhost:27017/educatable';
 
 mongoose.connect(MONGODB_URI, {
     useNewUrlParser: true,

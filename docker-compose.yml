@@ -1,12 +1,40 @@
-version: "2"
+version: "3"
 services:
     web:
         build: .
-        ports:
-            - "5000:5000" 
+        image: educatable-app
+        environment:
+            # Use the username and password found in the db-init.js file instead
+            # of the root username.
+            MONGODB_URI: mongodb://user:secretPassword@database/educatable
         depends_on:
-            - mongo
-    mongo:
-        image: mongo
+            - database
         ports:
-            - "27018:27017"
+            - 8082:5000
+    database:
+        image: mongo
+        restart: always
+        environment:
+            MONGO_INITDB_ROOT_USERNAME: root
+            MONGO_INITDB_ROOT_PASSWORD: example
+            # Create a new database. Please note, the
+            # /docker-entrypoint-initdb.d/init.js has to be executed
+            # in order for the database to be created
+            MONGO_INITDB_DATABASE: educatable
+        volumes:
+            # Add the db-init.js file to the Mongo DB container
+            - ./db-init.js:/docker-entrypoint-initdb.d/init.js:ro
+        ports:
+            - '28017:28018'
+
+    mongo-express:
+        image: mongo-express
+        restart: always
+        ports:
+            - 8081:8081
+        environment:
+            ME_CONFIG_MONGODB_ADMINUSERNAME: root
+            ME_CONFIG_MONGODB_ADMINPASSWORD: example
+            ME_CONFIG_MONGODB_SERVER: database
+        depends_on:
+            - database
